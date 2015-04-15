@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name frontendApp
+ * @name empApp
  * @description
- * # frontendApp
+ * # empApp
  *
  * Main module of the application.
  */
 angular
-  .module('frontendApp', [
+  .module('empApp', [
     'ngAnimate',
     'ngAria',
     'ngCookies',
@@ -22,12 +22,12 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'views/dashboard.html',
+        controller: 'DashboardCtrl'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
+      .when('/profile', {
+        templateUrl: 'views/profile.html',
+        controller: 'ProfileCtrl'
       })
       .otherwise({
         redirectTo: '/'

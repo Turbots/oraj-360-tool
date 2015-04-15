@@ -2,16 +2,30 @@
 
 /**
  * @ngdoc function
- * @name frontendApp.controller:MainCtrl
+ * @name empApp.controller:MainCtrl
  * @description
  * # MainCtrl
  * Controller of the frontendApp
  */
-angular.module('frontendApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
+angular.module('empApp')
+    .controller('MainCtrl', function ($scope, $log) {
+    
+    $log.info('MainCtrl loaded');
+    
+    $scope.notifications = {
+        amount: 3
+    };
+    
+    $scope.navmenuItems = [
+        { title: 'Dashboard', href: '/' },
+        { title: 'Mijn profiel', href: '/profile' },
+        { title: 'Zoek', href: '/search' },
+        { title: 'Agenda', href: '/agenda' },
+        { title: 'Opvolging', href: '/follow-up' },
+        { title: 'Services', href: '/services' }
     ];
+
+    $scope.offcanvasClose = function() {
+        angular.element('.navmenu').offcanvas('hide');
+    };
   });

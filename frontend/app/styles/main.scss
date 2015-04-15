@@ -10,9 +10,126 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   padding: 0.2em 0;
 }
 
-body {
-  padding: 0;
+/**
+ * Navmenu push
+ */
+html, body {
+  height: 100%;
 }
+
+.emp-app-container {
+  padding: 70px 0 0 0;
+}
+
+.navbar-toggle {
+  float: left;
+  margin-left: 15px;
+}
+
+@media (min-width: 0) {
+  .navbar-toggle {
+    display: block; /* force showing the toggle */
+  }
+}
+
+/**
+ * Navbar
+ */
+.navbar-text {
+    margin-left: 15px;
+    margin-right: 15px;
+    float: left;
+}
+.badge {
+    position: absolute;
+    top: -10px;
+    right: -18px;
+    color: #fff;
+    background: #c00;
+    border-radius: 30px;
+    height: 20px;
+    display: block;
+}
+
+/**
+ * Avatar
+ */    
+.avatar {
+    border-radius: 25px;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    display: inline-block;
+
+    .avatar__image {
+        width: 100%;
+    }
+}
+
+/**
+ * Timeline
+ */
+
+$timeline-line-color: #333;
+$timeline-dot-size: 11px;
+
+.timeline {
+    padding-left: 115px;
+
+    .timeline__component {
+        position: relative;
+        margin: 0;
+        padding: 15px 15px 30px;
+        list-style: none;
+        border-left: 1px solid $timeline-line-color;
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+
+        &:before {
+            position: absolute;
+            left: - ceil($timeline-dot-size / 2);
+            top: $timeline-dot-size * 3;
+            content: '';
+            background: $timeline-line-color;
+            border-radius: $timeline-dot-size;
+            width: $timeline-dot-size;
+            height: $timeline-dot-size;
+        }
+    }
+
+    .timeline__heading {
+        margin: 0;
+    }
+
+    .timeline__date {
+        position: absolute;
+        left: -100px;
+        top: 29px;
+    }
+    
+    .timeline__authors {
+        position: relative;
+        padding-top: 15px;
+    
+        &:before {
+            position: absolute;
+            left: 0;
+            top: 0;
+            content: '';
+            width: 25px;
+            border-top: 1px solid $timeline-line-color;
+        }
+    }
+}
+
+
+
+
+
+
+
+
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,

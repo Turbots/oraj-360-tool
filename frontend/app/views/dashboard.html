@@ -1,0 +1,11 @@
+<ul class="list-unstyled timeline">
+    <li class="timeline__component" ng-repeat="timelineItem in timelineItems">
+        <h1 class="timeline__heading">{{timelineItem.title}}</h1>
+        <span class="timeline__date">{{timelineItem.date | date : 'mediumDate'}}</span>
+        <p>{{timelineItem.description}}</p>
+        <div class="timeline__authors">
+            <a class="avatar" href=""><img class="avatar__image" ng-src="https://placekitten.com/g/200/300" /></a>
+            <a class="avatar" href=""><img class="avatar__image" ng-src="https://placekitten.com/g/200/300" /></a>
+        </div>
+    </li>
+</ul>
