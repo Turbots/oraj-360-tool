@@ -26,6 +26,6 @@ angular.module('empApp')
     ];
 
     $scope.offcanvasClose = function() {
-        angular.element('.navmenu').offcanvas('hide');
+//        angular.element('.navmenu').offcanvas('hide');
     };
   });
