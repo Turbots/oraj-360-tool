@@ -1,0 +1,25 @@
+<div class="row">
+    <form>
+      <div class="form-group col-sm-6">
+        <label for="firstname">Firstname</label>
+        <input ng-model="search.firstname" type="text" class="form-control" id="firstname" placeholder="Voornaam">
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="lastname">Lastname</label>
+        <input ng-model="search.lastname" type="text" class="form-control" id="lastname" placeholder="Achternaam">
+      </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-4 col-sm-6" ng-repeat="person in persons | filter:search">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{person.firstname}} {{person.lastname}}</h3>
+            </div>
+            <div class="panel-body">
+                Panel content
+            </div>
+        </div>
+    </div>
+</div>
+    
