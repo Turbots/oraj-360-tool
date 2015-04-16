@@ -4,51 +4,49 @@
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 </head>
-<body ng-app="empApp">
+<body ng-app="empApp" ng-controller="MainCtrl">
     <!--[if lt IE 9]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div class="emp-app-container" ng-controller="MainCtrl">
+    <nav id="navigation" role="navigation" class="navmenu navmenu-default navmenu-fixed-left offcanvas" ng-click="closeNavigation()">
+        <h1 class="nav-title">Employee tool</h1>
+        <ul class="nav navmenu-nav">
+            <li ng-repeat="navmenuItem in navmenuItems"><a ng-href="#{{navmenuItem.href}}" title="{{navmenuItem.title}}">{{navmenuItem.title}}</a></li>
+        </ul>
+    </nav>
 
-        <div class="navmenu navmenu-default navmenu-fixed-left">
-            <a class="navmenu-brand" href="#">Employee tool</a>
-            <nav role="navigation" ng-click="offcanvasClose()">
-                <ul class="nav navmenu-nav">
-                    <li ng-repeat="navmenuItem in navmenuItems"><a ng-href="#{{navmenuItem.href}}" title="{{navmenuItem.title}}">{{navmenuItem.title}}</a></li>
-                </ul>
-            </nav>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <button type="button" class="navbar-toggle menu-btn" data-toggle="offcanvas" data-target="#navigation" data-canvas="body">
+            <span class="menu-label">menu</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="pull-right">
+            <p class="navbar-text"><a href="#" class="badge-container glyphicon glyphicon-flag"><span class="badge">{{notifications.amount}}</span></a></p>
+            <p class="navbar-text"><a href="#" class="badge-container glyphicon glyphicon-cog"></a></p>
         </div>
+        <p class="navbar-text" style="text-align: center; float: none;">John Doe</p>
+    </div>
 
-        <div class="canvas">
-            <div class="navbar navbar-default navbar-fixed-top">
-                <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu" data-canvas="body">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="pull-right">
-                    <p class="navbar-text"><a href="#" class="badge-container glyphicon glyphicon-flag"><span class="badge">{{notifications.amount}}</span></a></p>
-                    <p class="navbar-text"><a href="#" class="badge-container glyphicon glyphicon-cog"></a></p>
-                </div>
-                <p class="navbar-text" style="text-align: center; float: none;">John Doe</p>
-            </div>
-
-            <div class="container">
-                <div ng-view=""></div>
-            </div>
-        </div>
-
+    <div class="container-content container">
+        <div ng-view=""></div>
     </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID 
@@ -75,6 +73,8 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

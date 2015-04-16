@@ -24,8 +24,8 @@ angular.module('empApp')
         { title: 'Opvolging', href: '/follow-up' },
         { title: 'Services', href: '/services' }
     ];
-
-    $scope.offcanvasClose = function() {
-//        angular.element('.navmenu').offcanvas('hide');
+    
+    $scope.closeNavigation = function() {
+        angular.element('.offcanvas').offcanvas('hide');
     };
   });
