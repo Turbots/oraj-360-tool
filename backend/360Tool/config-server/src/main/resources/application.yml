@@ -1,0 +1,21 @@
+server:
+  port: 8888
+
+logging:
+  level:
+    com.netflix.discovery: 'OFF'
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/SteveDZ/360-microservices-config.git
+
+#spring:
+#  platform:
+#    config:
+#      server:
+#        uri: https://github.com/SteveDZ/beers-microservice-config
+#        basedir: config
+#        basedir is the directory where the config reposistory will be cloned into. By default that's tmp

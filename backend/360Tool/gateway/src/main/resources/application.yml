@@ -1,0 +1,20 @@
+server:
+  port: 9900
+
+zuul:
+  prefix: /api
+  routes:
+    persons:
+      path: /persons/**
+      serviceId: person-service
+      stripPrefix: false
+    timelines:
+      path: /timeline/**
+      serviceId: timeline-service
+      stripPrefix: false
+
+logging:
+  level:
+    com:
+      netflix:
+        discovery: 'DEBUG'

@@ -1,0 +1,7 @@
+server:
+  port: 8082
+
+spring:
+  jackson:
+    serialization:
+      WRITE_CHAR_ARRAYS_AS_JSON_ARRAYS: false
