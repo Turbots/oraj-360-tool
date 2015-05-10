@@ -29,7 +29,8 @@
 		<module>timeline-service</module>
 		<module>common-model</module>
 		<module>hystrix</module>
-		<module>gateway</module>
+		<module>turbine</module>
+		<module>zuul</module>
 	</modules>
 
 	<dependencyManagement>

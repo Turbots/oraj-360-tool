@@ -1,10 +1,5 @@
 package be.ordina.threesixty.person.business;
 
-import org.apache.commons.logging.Log;
-import org.springframework.stereotype.Component;
-import sun.misc.BASE64Encoder;
-
-import javax.annotation.PostConstruct;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
@@ -12,7 +7,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import java.util.logging.Logger;
+import java.security.Security;
+
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.springframework.stereotype.Component;
+
+import sun.misc.BASE64Encoder;
 
 /**
  * Created by stevedezitter on 22/04/15.
@@ -56,7 +56,8 @@ public class PasswordHasher {
 
     public String generateBase64HashedPasswordForPasswordAndSalt(byte[] password, byte[] salt) {
         try {
-        MessageDigest messageDigest = MessageDigest.getInstance("SHA-256","BC");
+        	Security.addProvider(new BouncyCastleProvider());
+        	MessageDigest messageDigest = MessageDigest.getInstance("SHA-256","BC");
 
             messageDigest.reset();
             messageDigest.update(salt);
@@ -72,6 +73,7 @@ public class PasswordHasher {
         }catch(NoSuchAlgorithmException |
                 NoSuchProviderException cryptoException) {
             System.out.println("Error hashing password");
+            cryptoException.printStackTrace();
             return null;
         }
     }

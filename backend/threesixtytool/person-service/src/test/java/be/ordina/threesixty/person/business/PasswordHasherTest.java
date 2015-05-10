@@ -1,14 +1,17 @@
 package be.ordina.threesixty.person.business;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-
-import org.junit.Before;
-import org.junit.Test;
-import sun.misc.BASE64Decoder;
+import static org.hamcrest.Matchers.equalTo;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.security.Security;
+
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.junit.Before;
+import org.junit.Test;
+
+import sun.misc.BASE64Decoder;
 
 /**
  * Created by stevedezitter on 22/04/15.
@@ -35,7 +38,7 @@ public class PasswordHasherTest {
 
         String hashedPassword = passwordHasher.generateBase64HashedPasswordForPasswordAndSalt(password.getBytes(charset), decoder.decodeBuffer(SALT));
 
-        assertThat(HASHED_PASSWORD, equalTo(hashedPassword));
+        assertThat(hashedPassword, equalTo(HASHED_PASSWORD));
     }
 
 }
