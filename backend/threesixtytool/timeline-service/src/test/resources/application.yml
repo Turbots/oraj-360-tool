@@ -1,0 +1,7 @@
+utils:
+  dateformat: ddMMyyyy
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
