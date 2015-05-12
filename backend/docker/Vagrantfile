@@ -1,0 +1,53 @@
+﻿Vagrant.configure("2") do |config|
+  config.vm.box = "chef/ubuntu-14.04"
+  config.vm.synced_folder "../threesixtytool", "/threesixtytool", create: true
+  config.vm.network "forwarded_port", guest: 8888, host: 18888
+  config.vm.network "forwarded_port", guest: 7980, host: 17980
+  config.vm.network "forwarded_port", guest: 7981, host: 17981
+  config.vm.network "forwarded_port", guest: 8080, host: 18080
+  config.vm.network "forwarded_port", guest: 8081, host: 18081
+  config.vm.network "forwarded_port", guest: 8082, host: 18082
+  config.vm.network "forwarded_port", guest: 8989, host: 18989
+  config.vm.network "forwarded_port", guest: 8761, host: 18761
+  config.vm.network "forwarded_port", guest: 9900, host: 19900
+
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 4096
+    v.cpus = 2
+  end
+  
+  config.vm.provision "docker" do |d|
+    #d.build_image "--tag=java /vagrant/java"
+    d.build_image "--tag=mongodb /vagrant/mongodb"
+    d.build_image "--tag=service-registry /vagrant/service-registry"
+    d.build_image "--tag=config-server /vagrant/config-server"
+	d.build_image "--tag=zuul /vagrant/zuul"
+    d.build_image "--tag=hystrix /vagrant/hystrix"
+    d.build_image "--tag=turbine /vagrant/turbine"
+    d.build_image "--tag=person-service /vagrant/person-service"
+    d.build_image "--tag=timeline-service /vagrant/timeline-service"
+    
+    d.run "mongodb",
+      args: "-p 27017:27017 \
+      	-e MONGODB_USERNAME=threeSixtyAdmin \
+	    -e MONGODB_PASSWORD=password \
+    	-e MONGODB_DBNAME=threeSixty \
+    	-e MONGODB_ROLE=dbAdmin"
+    
+    d.run "service-registry",
+      args: "-p 8761:8761 -v /threesixtytool:/threesixtytool"
+    d.run "config-server",
+      args: "-p 8888:8888 -v /threesixtytool:/threesixtytool --link service-registry:eureka"
+    d.run "person-service",
+      args: "-p 8081:8081 -v /threesixtytool:/threesixtytool --link service-registry:eureka --link mongodb:mongodb"
+    d.run "timeline-service",
+      args: "-p 8082:8082 -v /threesixtytool:/threesixtytool --link service-registry:eureka --link mongodb:mongodb"
+    d.run "zuul",
+      args: "-p 9900:9900 -v /threesixtytool:/threesixtytool --link service-registry:eureka"
+	d.run "hystrix",
+      args: "-p 7980:7980 -v /threesixtytool:/threesixtytool --link service-registry:eureka"
+    d.run "turbine",
+      args: "-p 7981:7981 -v /threesixtytool:/threesixtytool --link service-registry:eureka"
+  end
+
+end

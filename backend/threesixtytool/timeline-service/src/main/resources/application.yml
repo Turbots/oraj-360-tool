@@ -2,6 +2,19 @@ server:
   port: 8082
 
 spring:
+  profiles:
+    active: local
   jackson:
     serialization:
       WRITE_CHAR_ARRAYS_AS_JSON_ARRAYS: false
+
+---
+spring:
+  profiles: dev
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka/
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 20

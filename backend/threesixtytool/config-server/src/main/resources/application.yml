@@ -6,12 +6,24 @@ logging:
     com.netflix.discovery: 'OFF'
 
 spring:
+  profiles:
+    active: local
   cloud:
     config:
       server:
         git:
           uri: https://github.com/SteveDZ/360-microservices-config.git
 
+---
+spring:
+  profiles: dev
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka/
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 20
 #spring:
 #  platform:
 #    config:

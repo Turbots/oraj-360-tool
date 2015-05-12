@@ -21,41 +21,25 @@ import java.util.List;
  * Created by stevedezitter on 14/04/15.
  */
 @Configuration
+<<<<<<< Updated upstream
 @Profile("default")
 @EnableMongoRepositories(basePackages={"be.ordina.threesixty.person.repository"})
 public class MongoConfiguration extends AbstractMongoConfiguration{
+=======
+@ComponentScan("be.ordina.threesixty.person.repository")
+@Profile("local")
+public class MongoConfiguration extends AbstractPersonServiceMongoConfiguration{
+>>>>>>> Stashed changes
 
     @Bean
     public Mongo mongo() throws Exception {
-        MongoCredential credential = MongoCredential.createCredential("threesixtyAdmin",
-                "threesixty",
+        MongoCredential credential = MongoCredential.createCredential("threeSixtyAdmin",
+                "threeSixty",
                 "password".toCharArray());
 
-//        MongoClient client = new MongoClient(new ServerAddress("macbook-pro-van-steve.local",27017)); // , Arrays.asList(credential));
-
-        MongoClient client = new MongoClient(Collections.singletonList(new ServerAddress("macbook-pro-van-steve.local", 27017)),
+        MongoClient client = new MongoClient(Collections.singletonList(new ServerAddress("localhost", 27017)),
                 Collections.singletonList(credential));
 
         return client;
     }
-
-    @Override
-    public String getDatabaseName() {
-        return "threesixty";
-    }
-
-    @Override
-    public String getMappingBasePackage() {
-        return "be.ordina.threesixty.person.model";
-    }
-
-    @Bean
-    @Override
-    public CustomConversions customConversions() {
-        List<Converter<?, ?>> converterList = new ArrayList<>();
-        converterList.add(new DbObjectToLocalDateConverter());
-//        converterList.add(new be.ordina.threesixty.common.repository.converter.LocalDateToDbObjectConverter());
-        return new CustomConversions(converterList);
-    }
-
 }
