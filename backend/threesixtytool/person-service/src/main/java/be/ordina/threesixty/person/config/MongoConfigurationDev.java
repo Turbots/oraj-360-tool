@@ -14,7 +14,7 @@ import java.util.Collections;
  * Created by stevedezitter on 12/05/15.
  */
 @Configuration
-@ComponentScan("be.ordina.threesixty.person.repository")
+//@ComponentScan("be.ordina.threesixty.person.repository")
 @Profile("dev")
 public class MongoConfigurationDev extends AbstractPersonServiceMongoConfiguration {
     @Override

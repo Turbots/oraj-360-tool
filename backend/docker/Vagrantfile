@@ -31,8 +31,7 @@
       args: "-p 27017:27017 \
       	-e MONGODB_USERNAME=threeSixtyAdmin \
 	    -e MONGODB_PASSWORD=password \
-    	-e MONGODB_DBNAME=threeSixty \
-    	-e MONGODB_ROLE=dbAdmin"
+    	-e MONGODB_DBNAME=threeSixty"
     
     d.run "service-registry",
       args: "-p 8761:8761 -v /threesixtytool:/threesixtytool"

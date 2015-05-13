@@ -8,10 +8,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import be.ordina.threesixty.timeline.TimelineApplication;
+import be.ordina.threesixty.timeline.config.MongoTestConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TimelineApplication.class)
+@SpringApplicationConfiguration(classes = {TimelineApplication.class, MongoTestConfiguration.class})
 @WebAppConfiguration
 @IntegrationTest("server.port=0")
 @DirtiesContext

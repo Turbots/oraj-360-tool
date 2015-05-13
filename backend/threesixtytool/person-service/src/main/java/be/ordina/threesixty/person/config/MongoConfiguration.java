@@ -21,15 +21,9 @@ import java.util.List;
  * Created by stevedezitter on 14/04/15.
  */
 @Configuration
-<<<<<<< Updated upstream
-@Profile("default")
-@EnableMongoRepositories(basePackages={"be.ordina.threesixty.person.repository"})
-public class MongoConfiguration extends AbstractMongoConfiguration{
-=======
-@ComponentScan("be.ordina.threesixty.person.repository")
+//@ComponentScan("be.ordina.threesixty.person.repository")
 @Profile("local")
 public class MongoConfiguration extends AbstractPersonServiceMongoConfiguration{
->>>>>>> Stashed changes
 
     @Bean
     public Mongo mongo() throws Exception {

@@ -8,6 +8,9 @@ spring:
     serialization:
       WRITE_CHAR_ARRAYS_AS_JSON_ARRAYS: false
 
+utils:
+  dateformat: ddMMyyyy
+
 ---
 spring:
   profiles: dev

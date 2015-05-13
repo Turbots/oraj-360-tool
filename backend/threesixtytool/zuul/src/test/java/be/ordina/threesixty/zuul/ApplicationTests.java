@@ -1,4 +1,4 @@
-package be.ordina.threesixty.hystrix;
+package be.ordina.threesixty.zuul;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,8 +8,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import be.ordina.threesixty.zuul.ZuulApplication;
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = HystrixApplication.class)
+@SpringApplicationConfiguration(classes =ZuulApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port=0")
 @DirtiesContext
