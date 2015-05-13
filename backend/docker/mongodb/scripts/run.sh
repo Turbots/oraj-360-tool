@@ -5,8 +5,6 @@ if [[ -e /.firstrun ]]; then
 	/scripts/first_run.sh
 fi
 
-# Start MongoDB
+# Start MongoDB -- $@
 echo "Starting MongoDB..."
-/usr/bin/mongod --dbpath /data
-
-# --auth $@
+/usr/bin/mongod --dbpath /data --auth
