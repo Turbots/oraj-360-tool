@@ -11,3 +11,9 @@ backend/threesixtytool/service-registry/.settings
 backend/threesixtytool/timeline-service/.settings
 backend/threesixtytool/zuul/.settings
 backend/threesixtytool/turbine/.settings
+backend/docker/.vagrant/machines/default/virtualbox/action_provision
+backend/docker/.vagrant/machines/default/virtualbox/action_set_name
+backend/docker/.vagrant/machines/default/virtualbox/id
+backend/docker/.vagrant/machines/default/virtualbox/index_uuid
+backend/docker/.vagrant/machines/default/virtualbox/private_key
+backend/docker/.vagrant/machines/default/virtualbox/synced_folders
