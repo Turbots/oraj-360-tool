@@ -1,10 +1,15 @@
 package be.ordina.threesixty.person.model;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import be.ordina.threesixty.common.model.Address;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +18,7 @@ import java.util.List;
  * Created by stevedezitter on 14/04/15.
  */
 @Document
+@JsonInclude(NON_NULL)
 public class Person {
 
     @Id

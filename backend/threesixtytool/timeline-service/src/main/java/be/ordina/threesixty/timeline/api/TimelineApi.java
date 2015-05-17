@@ -1,13 +1,20 @@
 package be.ordina.threesixty.timeline.api;
 
+import static org.springframework.http.ResponseEntity.created;
 import be.ordina.threesixty.timeline.model.*;
 import be.ordina.threesixty.timeline.repository.TimelineRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.RequestEntity.BodyBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,8 +75,9 @@ public class TimelineApi {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public void createTimelineEvent(@RequestBody TimelineEvent timelineEvent) {
-        timelineRepository.save(timelineEvent);
+    public ResponseEntity<Void> createTimelineEvent(@RequestBody TimelineEvent timelineEvent) throws URISyntaxException {
+        TimelineEvent event = timelineRepository.save(timelineEvent);
+        return created(new URI("/events/" + event.getId())).build();
     }
 
 }

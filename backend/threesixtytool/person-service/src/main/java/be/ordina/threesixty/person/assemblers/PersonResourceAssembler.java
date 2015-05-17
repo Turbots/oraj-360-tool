@@ -1,4 +1,4 @@
-package be.ordina.threesixty.person.api.resourceAssemblers;
+package be.ordina.threesixty.person.assemblers;
 
 import be.ordina.threesixty.person.api.PersonApi;
 import be.ordina.threesixty.person.model.Person;

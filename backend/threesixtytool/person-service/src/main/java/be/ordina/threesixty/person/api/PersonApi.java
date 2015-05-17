@@ -1,19 +1,28 @@
 package be.ordina.threesixty.person.api;
 
-import be.ordina.threesixty.person.api.resourceAssemblers.PersonResourceAssembler;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.ok;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import be.ordina.threesixty.person.assemblers.PersonResourceAssembler;
 import be.ordina.threesixty.person.business.PasswordHasher;
 import be.ordina.threesixty.person.model.Person;
 import be.ordina.threesixty.person.repository.PersonRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Resource;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Created by stevedezitter on 14/04/15.
@@ -49,7 +58,7 @@ public class PersonApi {
     }
 
     @RequestMapping(value="", method = RequestMethod.POST)
-    public void createEmployee(@RequestBody Person person) {
+    public ResponseEntity<Void> createEmployee(@RequestBody Person person) throws URISyntaxException {
         byte[] salt = passwordHasher.generateRandomSalt();
 //        byte[] passwordBytes = passwordHasher.getBytesForCharArrayPassword(person.getCredentials().getPassword());
         byte[] passwordBytes = passwordHasher.getBytesForPassword(person.getCredentials().getPassword());
@@ -60,13 +69,15 @@ public class PersonApi {
         person.getCredentials().setPassword(base64Password);
         person.getCredentials().setSalt(base64Salt);
 
-        personRepository.save(person);
+        Person storedPerson = personRepository.save(person);
+        return created(new URI("/persons/" + storedPerson.getId())).build();
     }
 
     //Consider using PATCH -> See REST in practice page 114
     @RequestMapping(value="", method = RequestMethod.PUT)
-    public void updateEmployee(@RequestBody Person person) {
+    public ResponseEntity<Void> updateEmployee(@RequestBody Person person) {
         personRepository.save(person);
+        return ok().build();
     }
 
 }
