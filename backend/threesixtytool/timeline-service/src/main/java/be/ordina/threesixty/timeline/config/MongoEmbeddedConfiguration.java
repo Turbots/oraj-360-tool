@@ -25,7 +25,7 @@ public class MongoEmbeddedConfiguration extends AbstractMongoConfiguration {
 	@Bean(destroyMethod = "close")
 	public Mongo mongo() throws IOException {
 		return new EmbeddedMongoBuilder().version("2.4.5").bindIp("127.0.0.1")
-				.port(12345).build();
+				.port(23456).build();
 	}
 
 }
