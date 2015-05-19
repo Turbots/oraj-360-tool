@@ -1,4 +1,4 @@
-[![Build Status](https://drone.io/github.com/Turbots/oraj-360-tool/status.png)](https://drone.io/github.com/Turbots/oraj-360-tool/latest) [![Stories in Ready](https://badge.waffle.io/Turbots/oraj-360-tool.png?label=ready&title=Ready)](https://waffle.io/Turbots/oraj-360-tool)
+[![Build Status](https://travis-ci.org/Turbots/oraj-360-tool.svg?branch=master)](https://travis-ci.org/Turbots/oraj-360-tool) [![Stories in Ready](https://badge.waffle.io/Turbots/oraj-360-tool.png?label=ready&title=Ready)](https://waffle.io/Turbots/oraj-360-tool)
 # Employee 360 (EMP)
 This project's purpose is to deliver insights and do follow-up of employees.
 
