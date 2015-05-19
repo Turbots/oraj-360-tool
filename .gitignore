@@ -19,3 +19,4 @@ backend/docker/.vagrant/machines/default/virtualbox/private_key
 backend/docker/.vagrant/machines/default/virtualbox/synced_folders
 .DS_Store
 .idea/
+backend/threesixtytool/admin/.settings
