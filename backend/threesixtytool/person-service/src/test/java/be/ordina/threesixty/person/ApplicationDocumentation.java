@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,16 +19,11 @@ import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.restdocs.RestDocumentation;
 import org.springframework.restdocs.config.RestDocumentationConfigurer;
-import org.springframework.restdocs.hypermedia.HypermediaDocumentation;
-import org.springframework.restdocs.hypermedia.LinkExtractors;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -55,7 +49,7 @@ public class ApplicationDocumentation {
 	private MockMvc mockMvc;
 	@Autowired
 	private WebApplicationContext context;
-	private Person employee;
+	private Person person;
 	private static final ObjectWriter OBJECT_WRITER = new ObjectMapper()
 			.setSerializationInclusion(Include.NON_NULL)
 			.writer();
@@ -64,10 +58,10 @@ public class ApplicationDocumentation {
 	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
 				.apply(new RestDocumentationConfigurer()).build();
-		employee = createNewEmployee();
+		person = createNewPerson();
 	}
 
-	private Person createNewEmployee() {
+	private Person createNewPerson() {
 		Person person = new Person();
 		person.setFirstName("John");
 		person.setLastName("Doe");
@@ -100,19 +94,19 @@ public class ApplicationDocumentation {
 	public void getIndex() throws Exception {
 		mockMvc.perform(get("/"))
 			.andExpect(status().isOk())
-			.andExpect(jsonPath("$._links.employees.href", endsWith("persons")))
+			.andExpect(jsonPath("$._links.persons.href", endsWith("persons")))
 			.andDo(document("index-get").withLinks(halLinks(),
-					linkWithRel("employees").description("The <<resources-employees-get, Employees resource>>"),
-					linkWithRel("employee").description("The <<resources-employee-get, Employee resource>>"),
-					linkWithRel("createEmployee").description("Creating the <<resources-employees-create, Employee resource>>"),
-					linkWithRel("updateEmployee").description("Update the <<resources-employees-get, Employee resource>>")));
+					linkWithRel("persons").description("The <<resources-persons-get, Persons resource>>"),
+					linkWithRel("person").description("The <<resources-person-get, Person resource>>"),
+					linkWithRel("createPerson").description("Creating the <<resources-persons-create, Person resource>>"),
+					linkWithRel("updatePerson").description("Update the <<resources-persons-get, Person resource>>")));
 	}
 	
 	@Test
-	public void postEmployeeError() throws JsonProcessingException, Exception {
-		mockMvc.perform(post("/persons").content("badsyntax}" + OBJECT_WRITER.writeValueAsString(employee) + "badsyntax}").contentType(APPLICATION_JSON))
+	public void postPersonError() throws JsonProcessingException, Exception {
+		mockMvc.perform(post("/persons").content("badsyntax}" + OBJECT_WRITER.writeValueAsString(person) + "badsyntax}").contentType(APPLICATION_JSON))
 			.andExpect(status().isInternalServerError())
-			.andDo(RestDocumentation.document("employee-error")
+			.andDo(RestDocumentation.document("person-error")
 					.withResponseFields(
 							fieldWithPath("exceptionType").description("The type of the exception"),
 							fieldWithPath("message").description("The message of the exception"),
@@ -121,39 +115,39 @@ public class ApplicationDocumentation {
 	}
 
 	@Test
-	public void postAndGetEmployee() throws JsonProcessingException, Exception {
-		mockMvc.perform(post("/persons").content(OBJECT_WRITER.writeValueAsString(employee)).contentType(APPLICATION_JSON))
+	public void postAndGetPerson() throws JsonProcessingException, Exception {
+		mockMvc.perform(post("/persons").content(OBJECT_WRITER.writeValueAsString(person)).contentType(APPLICATION_JSON))
 			.andExpect(status().isCreated())
-			.andDo(RestDocumentation.document("employee-create")
+			.andDo(RestDocumentation.document("person-create")
 					.withRequestFields(
-							fieldWithPath("firstName").description("The firstname of the employee"),
-							fieldWithPath("lastName").description("The lastname of the employee"),
-							fieldWithPath("credentials").description("Login credentials of the employee"),
-							fieldWithPath("credentials.username").description("The username of the employee"),
-							fieldWithPath("credentials.password").description("The password of the employee"),
-							fieldWithPath("address").description("The address of the employee"),
-							fieldWithPath("team").description("The team to which the employee belongs")
+							fieldWithPath("firstName").description("The firstname of the person"),
+							fieldWithPath("lastName").description("The lastname of the person"),
+							fieldWithPath("credentials").description("Login credentials of the person"),
+							fieldWithPath("credentials.username").description("The username of the person"),
+							fieldWithPath("credentials.password").description("The password of the person"),
+							fieldWithPath("address").description("The address of the person"),
+							fieldWithPath("team").description("The team to which the person belongs")
 					));
 		mockMvc.perform(get("/persons").contentType(APPLICATION_JSON))
 			.andExpect(status().isOk())
-			.andDo(document("employees-get")
+			.andDo(document("persons-get")
 					.withResponseFields(
-							fieldWithPath("[].id").description("The id of the employee"),
-							fieldWithPath("[].firstName").description("The firstname of the employee"),
-							fieldWithPath("[].lastName").description("The lastname of the employee"),
-							fieldWithPath("[].credentials").description("Login credentials of the employee"),
-							fieldWithPath("[].credentials.username").description("The username of the employee"),
-							fieldWithPath("[].credentials.password").description("The password of the employee"),
-//							fieldWithPath("[].birthDate").description("The birthdate of the employee"),
-//							fieldWithPath("[].manager").description("The manager of the employee"),
-//							fieldWithPath("[].coach").description("The coach of the employee"),
-//							fieldWithPath("[].role").description("The role of the employee"),
-//							fieldWithPath("[].focusDomain").description("The focusDomains of the employee"),
-//							fieldWithPath("[].competenceLeader").description("The competenceLeaders of the employee"),
-//							fieldWithPath("[].timelineEvents").description("The timelineEvents of the employee"),
-//							fieldWithPath("[].satisfactionHistory").description("The satisfactionHistory of the employee"),
-							fieldWithPath("[].address").description("The address of the employee"),
-							fieldWithPath("[].team").description("The team to which the employee belongs"),
+							fieldWithPath("[].id").description("The id of the person"),
+							fieldWithPath("[].firstName").description("The firstname of the person"),
+							fieldWithPath("[].lastName").description("The lastname of the person"),
+							fieldWithPath("[].credentials").description("Login credentials of the person"),
+							fieldWithPath("[].credentials.username").description("The username of the person"),
+							fieldWithPath("[].credentials.password").description("The password of the person"),
+//							fieldWithPath("[].birthDate").description("The birthdate of the person"),
+//							fieldWithPath("[].manager").description("The manager of the person"),
+//							fieldWithPath("[].coach").description("The coach of the person"),
+//							fieldWithPath("[].role").description("The role of the person"),
+//							fieldWithPath("[].focusDomain").description("The focusDomains of the person"),
+//							fieldWithPath("[].competenceLeader").description("The competenceLeaders of the person"),
+//							fieldWithPath("[].timelineEvents").description("The timelineEvents of the person"),
+//							fieldWithPath("[].satisfactionHistory").description("The satisfactionHistory of the person"),
+							fieldWithPath("[].address").description("The address of the person"),
+							fieldWithPath("[].team").description("The team to which the person belongs"),
 							fieldWithPath("[]._links").description("The relations this resource has with other resources")
 					));
 	}

@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class IndexApi {
 
-	private static final String PERSONS_REL = "employees";
-	private static final String EMPLOYEE_REL = "employee";
-	private static final String CREATE_EMPLOYEE_REL = "createEmployee";
-	private static final String UPDATE_EMPLOYEE_REL = "updateEmployee";
+	private static final String PERSONS_REL = "persons";
+	private static final String PERSON_REL = "person";
+	private static final String CREATE_PERSON_REL = "createPerson";
+	private static final String UPDATE_PERSON_REL = "updatePerson";
 
 	@RequestMapping("/")
 	public HttpEntity<ResourceSupport> getIndex() throws URISyntaxException {
 		ResourceSupport resource = new ResourceSupport();
 		resource.add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(PersonApi.class).getAllPersons()).withRel(PERSONS_REL));
-		resource.add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(PersonApi.class).getEmployeeById("testId")).withRel(EMPLOYEE_REL));
-		resource.add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(PersonApi.class).createEmployee(null)).withRel(CREATE_EMPLOYEE_REL));
-		resource.add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(PersonApi.class).updateEmployee(null)).withRel(UPDATE_EMPLOYEE_REL));
+		resource.add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(PersonApi.class).getPersonById("testId")).withRel(PERSON_REL));
+		resource.add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(PersonApi.class).createPerson(null)).withRel(CREATE_PERSON_REL));
+		resource.add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(PersonApi.class).updatePerson(null)).withRel(UPDATE_PERSON_REL));
 		return ok().body(resource);
 	}
 }

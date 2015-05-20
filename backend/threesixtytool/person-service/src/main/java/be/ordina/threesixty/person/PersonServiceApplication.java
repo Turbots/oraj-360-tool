@@ -1,11 +1,8 @@
 package be.ordina.threesixty.person;
 
-import static org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType.HAL;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.hateoas.config.EnableHypermediaSupport;
 
 /**
  * Created by stevedezitter on 14/04/15.
