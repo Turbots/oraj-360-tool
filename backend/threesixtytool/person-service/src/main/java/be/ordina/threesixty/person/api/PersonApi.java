@@ -53,12 +53,12 @@ public class PersonApi {
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.GET)
-    public Person getEmployeeById(@PathVariable String id) {
+    public Person getPersonById(@PathVariable String id) {
         return personRepository.findOne(id);
     }
 
     @RequestMapping(value="", method = RequestMethod.POST)
-    public ResponseEntity<Void> createEmployee(@RequestBody Person person) throws URISyntaxException {
+    public ResponseEntity<Void> createPerson(@RequestBody Person person) throws URISyntaxException {
         byte[] salt = passwordHasher.generateRandomSalt();
 //        byte[] passwordBytes = passwordHasher.getBytesForCharArrayPassword(person.getCredentials().getPassword());
         byte[] passwordBytes = passwordHasher.getBytesForPassword(person.getCredentials().getPassword());
@@ -75,7 +75,7 @@ public class PersonApi {
 
     //Consider using PATCH -> See REST in practice page 114
     @RequestMapping(value="", method = RequestMethod.PUT)
-    public ResponseEntity<Void> updateEmployee(@RequestBody Person person) {
+    public ResponseEntity<Void> updatePerson(@RequestBody Person person) {
         personRepository.save(person);
         return ok().build();
     }
