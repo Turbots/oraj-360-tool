@@ -1,4 +1,4 @@
-﻿Vagrant.configure("2") do |config|
+Vagrant.configure("2") do |config|
   config.vm.box = "chef/ubuntu-14.04"
   config.vm.synced_folder "../threesixtytool", "/threesixtytool", create: true
   config.vm.network "forwarded_port", guest: 8888, host: 18888
@@ -15,6 +15,12 @@
     v.memory = 4096
     v.cpus = 2
   end
+  
+#  config.vm.provision "shell",
+#	inline: "curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
+  	
+#  config.vm.provision "shell",
+#  	inline: "chmod +x /usr/local/bin/docker-compose"
   
   config.vm.provision "docker" do |d|
     #d.build_image "--tag=java /vagrant/java"
@@ -38,9 +44,9 @@
     d.run "config-server",
       args: "-p 8888:8888 -v /threesixtytool:/threesixtytool --link service-registry:eureka"
     d.run "person-service",
-      args: "-p 8081:8081 -v /threesixtytool:/threesixtytool --link service-registry:eureka --link mongodb:mongodb"
+      args: "-p 8081:8081 -v /threesixtytool:/threesixtytool --link service-registry:eureka --link mongodb:mongodb --link config-server:config-server"
     d.run "timeline-service",
-      args: "-p 8082:8082 -v /threesixtytool:/threesixtytool --link service-registry:eureka --link mongodb:mongodb"
+      args: "-p 8082:8082 -v /threesixtytool:/threesixtytool --link service-registry:eureka --link mongodb:mongodb --link config-server:config-server"
     d.run "zuul",
       args: "-p 9900:9900 -v /threesixtytool:/threesixtytool --link service-registry:eureka"
 	d.run "hystrix",
@@ -48,5 +54,8 @@
     d.run "turbine",
       args: "-p 7981:7981 -v /threesixtytool:/threesixtytool --link service-registry:eureka"
   end
-
+  
+#  config.vm.provision "shell",
+#  	inline: "docker-compose -f /vagrant/docker-compose.yml up -d"
+  
 end

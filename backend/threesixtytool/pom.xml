@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-starter-parent</artifactId>
-		<version>1.0.1.BUILD-SNAPSHOT</version>
+		<version>1.0.2.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -46,6 +46,18 @@
 				<groupId>be.ordina.threesixty</groupId>
 				<artifactId>common-model</artifactId>
 				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<!-- RetryTemplate allowing us to retry retrieving config from config-server -->
+			<dependency>
+				<groupId>org.springframework.retry</groupId>
+				<artifactId>spring-retry</artifactId>
+				<version>1.1.2.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-aop</artifactId>
+				<version>1.2.3.RELEASE</version>
 			</dependency>
 
 			<!-- mongodb libraries -->

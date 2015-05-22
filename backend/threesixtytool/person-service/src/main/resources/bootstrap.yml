@@ -1,3 +1,34 @@
 spring:
   application:
     name: person-service
+  cloud:
+    config:
+      failFast: true
+#retry properties. retry in case config-server has not started yet.
+  config:
+    retry:
+      initialInterval: 2000
+      multiplier: 1.2
+      maxInterval: 100000
+      maxAttempts: 20
+
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      uri: http://config-server:8888/
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka/
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 20
+---
+spring:
+  profiles: test
+  cloud:
+    config:
+      failFast: false
