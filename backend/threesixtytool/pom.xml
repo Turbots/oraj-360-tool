@@ -32,6 +32,7 @@
 		<module>turbine</module>
 		<module>zuul</module>
 		<module>admin</module>
+		<module>auth-server</module>
 	</modules>
 
 	<dependencyManagement>
@@ -99,7 +100,17 @@
 				<version>2.5.1</version>
 			</dependency>
 
-			<!-- Crypto libraries -->
+			<!-- Security libraries -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-security</artifactId>
+				<version>1.0.1.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security.oauth</groupId>
+				<artifactId>spring-security-oauth2</artifactId>
+				<version>2.0.7.RELEASE</version>
+			</dependency>
 			<dependency>
 				<groupId>org.bouncycastle</groupId>
 				<artifactId>bcprov-jdk15on</artifactId>

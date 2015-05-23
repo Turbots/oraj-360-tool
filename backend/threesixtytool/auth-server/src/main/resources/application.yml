@@ -1,0 +1,28 @@
+security:
+  user:
+    name: admin
+    password: admin
+
+server:
+  port: 8083
+
+spring:
+  profiles:
+    active: local
+  jackson:
+    serialization:
+      WRITE_CHAR_ARRAYS_AS_JSON_ARRAYS: false
+
+utils:
+  dateformat: ddMMyyyy
+
+---
+spring:
+  profiles: dev
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 20
