@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 8080, host: 18080
   config.vm.network "forwarded_port", guest: 8081, host: 18081
   config.vm.network "forwarded_port", guest: 8082, host: 18082
+  config.vm.network "forwarded_port", guest: 8083, host: 18083
   config.vm.network "forwarded_port", guest: 8989, host: 18989
   config.vm.network "forwarded_port", guest: 8761, host: 18761
   config.vm.network "forwarded_port", guest: 9900, host: 19900
@@ -32,6 +33,7 @@ Vagrant.configure("2") do |config|
     d.build_image "--tag=turbine /vagrant/turbine"
     d.build_image "--tag=person-service /vagrant/person-service"
     d.build_image "--tag=timeline-service /vagrant/timeline-service"
+    d.build_image "--tag=auth-server /vagrant/auth-server"
     
     d.run "mongodb",
       args: "-p 27017:27017 \
@@ -47,6 +49,8 @@ Vagrant.configure("2") do |config|
       args: "-p 8081:8081 -v /threesixtytool:/threesixtytool --link service-registry:eureka --link mongodb:mongodb --link config-server:config-server"
     d.run "timeline-service",
       args: "-p 8082:8082 -v /threesixtytool:/threesixtytool --link service-registry:eureka --link mongodb:mongodb --link config-server:config-server"
+    d.run "auth-server",
+      args: "-p 8083:8083 -v /threesixtytool:/threesixtytool --link service-registry:eureka --link config-server:config-server"
     d.run "zuul",
       args: "-p 9900:9900 -v /threesixtytool:/threesixtytool --link service-registry:eureka"
 	d.run "hystrix",
