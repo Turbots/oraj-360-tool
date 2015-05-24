@@ -7,6 +7,7 @@ import com.mongodb.ServerAddress;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.Collections;
 
@@ -14,7 +15,7 @@ import java.util.Collections;
  * Created by stevedezitter on 12/05/15.
  */
 @Configuration
-//@ComponentScan("be.ordina.threesixty.person.repository")
+@EnableMongoRepositories(basePackages = { "be.ordina.threesixty.timeline.repository" })
 @Profile("dev")
 public class MongoConfigurationDev extends AbstractPersonServiceMongoConfiguration {
     @Override
@@ -23,7 +24,7 @@ public class MongoConfigurationDev extends AbstractPersonServiceMongoConfigurati
                 "threeSixty",
                 "password".toCharArray());
 
-        MongoClient client = new MongoClient(Collections.singletonList(new ServerAddress("mongodb", 27017)),
+        MongoClient client = new MongoClient(Collections.singletonList(new ServerAddress("localhost", 27017)),
                 Collections.singletonList(credential));
 
         return client;
