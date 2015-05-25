@@ -7,3 +7,7 @@ spring:
   jackson:
     serialization:
       WRITE_CHAR_ARRAYS_AS_JSON_ARRAYS: false
+
+logging:
+  level:
+    org.springframework.retry: DEBUG
