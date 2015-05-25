@@ -1,7 +1,13 @@
 package be.ordina.threesixty.person.api;
 
-import static org.springframework.http.ResponseEntity.created;
-import static org.springframework.http.ResponseEntity.ok;
+import be.ordina.threesixty.person.assemblers.PersonResourceAssembler;
+import be.ordina.threesixty.person.business.PasswordHasher;
+import be.ordina.threesixty.person.model.Person;
+import be.ordina.threesixty.person.repository.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -10,30 +16,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Resource;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import be.ordina.threesixty.person.assemblers.PersonResourceAssembler;
-import be.ordina.threesixty.person.business.PasswordHasher;
-import be.ordina.threesixty.person.model.Person;
-import be.ordina.threesixty.person.repository.PersonRepository;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.ok;
 
 /**
+ * API for CRUD operations on {@link Person}s.
  * Created by stevedezitter on 14/04/15.
  */
 @RestController
 @RequestMapping("/persons")
 public class PersonApi {
 
-    private PersonRepository personRepository;
-    private PersonResourceAssembler personResourceAssembler;
-    private PasswordHasher passwordHasher;
+    final private PersonRepository personRepository;
+    final private PersonResourceAssembler personResourceAssembler;
+    final private PasswordHasher passwordHasher;
 
     @Autowired
     public PersonApi(PersonRepository personRepository, PersonResourceAssembler personResourceAssembler, PasswordHasher passwordHasher) {
@@ -42,25 +38,22 @@ public class PersonApi {
         this.passwordHasher = passwordHasher;
     }
 
-    @RequestMapping(value="", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Resource<Person>> getAllPersons() {
         Iterable<Person> allPersons = personRepository.findAll();
-        List<Resource<Person>> personResourceList = StreamSupport.stream(allPersons.spliterator(), true)
-                .map(person -> personResourceAssembler.toResource(person))
+        return StreamSupport.stream(allPersons.spliterator(), true)
+                .map(personResourceAssembler::toResource)
                 .collect(Collectors.toCollection(ArrayList::new));
-
-        return personResourceList;
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Person getPersonById(@PathVariable String id) {
         return personRepository.findOne(id);
     }
 
-    @RequestMapping(value="", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<Void> createPerson(@RequestBody Person person) throws URISyntaxException {
         byte[] salt = passwordHasher.generateRandomSalt();
-//        byte[] passwordBytes = passwordHasher.getBytesForCharArrayPassword(person.getCredentials().getPassword());
         byte[] passwordBytes = passwordHasher.getBytesForPassword(person.getCredentials().getPassword());
 
         String base64Password = passwordHasher.generateBase64HashedPasswordForPasswordAndSalt(passwordBytes, salt);
@@ -74,7 +67,7 @@ public class PersonApi {
     }
 
     //Consider using PATCH -> See REST in practice page 114
-    @RequestMapping(value="", method = RequestMethod.PUT)
+    @RequestMapping(value = "", method = RequestMethod.PUT)
     public ResponseEntity<Void> updatePerson(@RequestBody Person person) {
         personRepository.save(person);
         return ok().build();
