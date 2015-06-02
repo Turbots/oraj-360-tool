@@ -6,7 +6,6 @@ spring:
     active: local
   jackson:
     serialization:
-      WRITE_CHAR_ARRAYS_AS_JSON_ARRAYS: false
 
 logging:
   level:
