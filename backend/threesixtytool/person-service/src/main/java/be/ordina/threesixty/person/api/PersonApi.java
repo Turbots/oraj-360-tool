@@ -1,14 +1,16 @@
 package be.ordina.threesixty.person.api;
 
+import static java.util.stream.StreamSupport.stream;
 import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
@@ -16,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import be.ordina.threesixty.person.assemblers.PersonResourceAssembler;
@@ -42,22 +43,22 @@ public class PersonApi {
         this.passwordHasher = passwordHasher;
     }
 
-    @RequestMapping(value="", method = RequestMethod.GET)
+    @RequestMapping
     public List<Resource<Person>> getAllPersons() {
         Iterable<Person> allPersons = personRepository.findAll();
-        List<Resource<Person>> personResourceList = StreamSupport.stream(allPersons.spliterator(), true)
+        List<Resource<Person>> personResourceList = stream(allPersons.spliterator(), true)
                 .map(person -> personResourceAssembler.toResource(person))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         return personResourceList;
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="/{id}")
     public Person getPersonById(@PathVariable String id) {
         return personRepository.findOne(id);
     }
 
-    @RequestMapping(value="", method = RequestMethod.POST)
+    @RequestMapping(method = POST)
     public ResponseEntity<Void> createPerson(@RequestBody Person person) throws URISyntaxException {
         byte[] salt = passwordHasher.generateRandomSalt();
 //        byte[] passwordBytes = passwordHasher.getBytesForCharArrayPassword(person.getCredentials().getPassword());
@@ -74,7 +75,7 @@ public class PersonApi {
     }
 
     //Consider using PATCH -> See REST in practice page 114
-    @RequestMapping(value="", method = RequestMethod.PUT)
+    @RequestMapping(method = PUT)
     public ResponseEntity<Void> updatePerson(@RequestBody Person person) {
         personRepository.save(person);
         return ok().build();
