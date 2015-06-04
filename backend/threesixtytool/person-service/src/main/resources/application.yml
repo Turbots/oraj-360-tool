@@ -1,12 +1,15 @@
 server:
   port: 8081
-
+---
 spring:
   profiles:
     active: local
   jackson:
     serialization:
-
+      WRITE_CHAR_ARRAYS_AS_JSON_ARRAYS: false
+---
+utils:
+  dateformat: ddMMyyyy
 logging:
   level:
     org.springframework.retry: DEBUG

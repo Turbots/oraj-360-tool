@@ -9,16 +9,16 @@ import org.springframework.stereotype.Component;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 /**
- * Created by stevedezitter on 22/04/15.
+ * Resource assembler for Persons.
  */
 @Component
-public class PersonResourceAssembler implements ResourceAssembler<Person, Resource<Person>>{
+public class PersonResourceAssembler implements ResourceAssembler<Person, Resource<Person>> {
 
     @Override
     public Resource<Person> toResource(Person person) {
-        Resource<Person> personResource = new Resource<Person>(person);
+        Resource<Person> personResource = new Resource<>(person);
 
-        if(person.getManager()!=null) {
+        if (person.getManager() != null) {
             person.getManager().forEach(managerId -> personResource.add(linkTo(PersonApi.class).slash(managerId).withRel("manager")));
         }
         personResource.add(linkTo(PersonApi.class).slash(person.getId()).withSelfRel());

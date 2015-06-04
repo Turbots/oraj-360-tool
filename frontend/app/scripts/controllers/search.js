@@ -8,9 +8,7 @@
  * Controller of the frontendApp
  */
 angular.module('empApp')
-    .controller('SearchCtrl', function ($scope, $log, Persons) {
+    .controller('SearchCtrl', function ($scope, $log) {
     
     $log.info('SearchCtrl loaded');
-    
-    $scope.persons = Persons.all();
   });

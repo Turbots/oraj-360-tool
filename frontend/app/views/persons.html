@@ -1,0 +1,98 @@
+<h1>People</h1>
+<hr>
+<h3>Filter</h3>
+<div class="row">
+    <div class="col-xs-6">
+        <input ng-model="search.firstName" type="text" class="form-control" id="firstNameSearch"
+               placeholder="First Name">
+    </div>
+    <div class="col-xs-6">
+        <input ng-model="search.lastName" type="text" class="form-control" id="lastNameSearch" placeholder="Last Name">
+    </div>
+</div>
+<hr>
+<h3>List</h3>
+<div class="row">
+    <div class="col-lg-6">
+        <table class="table table-hover table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="person in persons | filter:search" ng-click="selectPerson(person)">
+                <td>{{person.id}}</td>
+                <td>{{person.firstName}}</td>
+                <td>{{person.lastName}}</td>
+                <td>{{person.credentials.username}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pull-right">
+            <button type="button" class="btn btn-primary" ng-click="add()">Add</button>
+        </div>
+    </div>
+    <div class="col-lg-6" ng-show="selectedPerson">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>{{selectedPerson.firstName}} {{selectedPerson.lastName}}
+                    <small>{{selectedPerson.id}}</small>
+                </h1>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-3">
+                <a href="" class="thumbnail">
+                    <img data-src="holder.js/100%x180" alt="Profile Picture"
+                         style="height: 180px; width: 100%; display: block;"
+                         src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE3MSAxODAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE4MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYxIiB5PSI5MCIgc3R5bGU9ImZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE3MXgxODA8L3RleHQ+PC9nPjwvc3ZnPg=="
+                         data-holder-rendered="true">
+                </a>
+            </div>
+            <div class="col-md-9">
+                <h4>Person Details</h4>
+                <hr>
+                <dl class="dl-horizontal">
+                    <dt>Username</dt>
+                    <dd>{{selectedPerson.credentials.username}}</dd>
+                    <dt>Password Hash</dt>
+                    <dd>{{selectedPerson.credentials.password}}</dd>
+                    <dt>Address</dt>
+                    <dd>
+                        <address>
+                            795 Folsom Ave, Suite 600<br>
+                            San Francisco, CA 94107<br>
+                            <abbr title="Phone">P:</abbr> (123) 456-7890
+                        </address>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="userModalContent">
+    <div class="modal-header">
+        <h3 class="modal-title">Add a person</h3>
+    </div>
+    <div class="modal-body">
+        <form>
+            <label for="firstName">First Name</label>
+            <input id="firstName" class="input-large" ng-model="firstName"/>
+            <label for="lastName">Last Name</label>
+            <input id="lastName" class="input-large" ng-model="lastName"/>
+            <label for="username">Username</label>
+            <input id="username" class="input-large" ng-model="username"/>
+            <label for="password">Password</label>
+            <input id="password" class="input-large" ng-model="password"/>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="$dismiss()">Cancel</button>
+    </div>
+</script>

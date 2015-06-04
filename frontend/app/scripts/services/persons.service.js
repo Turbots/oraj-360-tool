@@ -1,21 +1,28 @@
 'use strict';
 
 angular.module('empApp')
-.factory('Persons', function() {
-    
-    var personItemAmount = 30;
+  .factory('PersonFactory', function ($http) {
+
     var persons = [];
-    for (personItemAmount; personItemAmount > 0; personItemAmount--) {
-        persons.push({
-            firstname: 'Person ' + personItemAmount,
-            lastname: 'Lastname ' + personItemAmount
-        });
-    }
-    
-    // Some fake testing data
+
+    $http.get('http://localhost:9900/api/person-service/persons').success(function (data) {
+      data.forEach(function (person) {
+        persons.push(person);
+      });
+    });
+
     return {
-        all: function() {
-            return persons;
-        }
+      all: function () {
+        return persons;
+      },
+      update: function () {
+        persons = [];
+        $http.get('http://localhost:9900/api/person-service/persons').success(function (data) {
+          data.forEach(function (person) {
+            persons.push(person);
+          });
+        });
+        return persons;
+      }
     };
-});
+  });
