@@ -41,7 +41,7 @@ public class PersonApi {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Resource<Person>> getAllPersons() {
         Iterable<Person> allPersons = personRepository.findAll();
-        return StreamSupport.stream(allPersons.spliterator(), true)
+        return StreamSupport.stream(allPersons.spliterator(), false)
                 .map(personResourceAssembler::toResource)
                 .collect(Collectors.toCollection(ArrayList::new));
     }

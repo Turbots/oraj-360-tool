@@ -38,9 +38,10 @@ angular.module('empApp')
           username: $scope.username,
           password: $scope.password
         }
-      }).success(function () {
-        console.log('User created at!');
+      }).success(function (data, status, headers) {
+        console.log('headers: ' + headers('location'));
         $scope.persons = PersonFactory.update();
+        $scope.modal.close('User created');
       });
     };
 
