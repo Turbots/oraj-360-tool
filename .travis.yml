@@ -5,6 +5,7 @@ branches:
   only:
   - master
 before_script: cd backend/threesixtytool/
+script: mvn -version
 deploy:
   provider: openshift
   user: dieter.hubau@ordina.be
