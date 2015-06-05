@@ -158,15 +158,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <profiles>
-    	<profile>
-    		<id>openshift</id>
-    		<properties>
-        		<maven.compiler.executable>/usr/lib/jvm/java-1.8.0/bin/javac</maven.compiler.executable>
-    		</properties>
-    	</profile>
-    </profiles>
-
     <build>
         <plugins>
             <plugin>
