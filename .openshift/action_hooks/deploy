@@ -16,5 +16,7 @@ fi
 
 cd $OPENSHIFT_REPO_DIR/backend/threesixtytool
 export MAVEN_OPTS="-Xms384m -Xmx412m"
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0/
 
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0/ mvn -s settings.xml clean install -DskipTests=true
+mvn -version
+mvn -s settings.xml clean install -DskipTests=true
