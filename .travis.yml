@@ -5,7 +5,7 @@ branches:
   only:
   - master
 before_script: cd backend/threesixtytool/
-before_deploy: "scp -p service-registry/target/service-registry-1.0.0-SNAPSHOT.jar 5570d93be0b8cde0de00019b@registry-oraj360tool.rhcloud.com:/app-deployment/current/"
+before_deploy: "scp -pq service-registry/target/service-registry-1.0.0-SNAPSHOT.jar 5570d93be0b8cde0de00019b@registry-oraj360tool.rhcloud.com:/app-deployments/current/"
 deploy:
   provider: openshift
   skip_cleanup: true
