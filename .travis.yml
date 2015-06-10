@@ -16,3 +16,5 @@ deploy:
   domain: oraj360tool
   on:
     repo: Turbots/oraj-360-tool
+addons:
+  ssh_known_hosts: registry-oraj360tool.rhcloud.com
