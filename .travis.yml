@@ -5,9 +5,10 @@ branches:
   only:
   - master
 before_script: cd backend/threesixtytool/
-script: mvn -version
+before_deploy: "scp -p service-registry/target/service-registry-1.0.0-SNAPSHOT.jar 5570d93be0b8cde0de00019b@registry-oraj360tool.rhcloud.com:/app-deployment/current/"
 deploy:
   provider: openshift
+  skip_cleanup: true
   user: dieter.hubau@ordina.be
   password:
     secure: HAaw6mVz08cUXIk+YZaS7QTb7oQGhSteTPGK5Nh7tkLtiDLrMFHD6pmhgYMeEvk/hy/RThsFbdn2wos3LbOpk1LEQPix6wP/Wa28Q5hJBWfNvVWfAt/e+bgCb6e8p49MJF2VxCH/D+lyy3lma4SQjKXX6+4vCmj8FhXUa8QlP0urqEzktzB5nTfeu2qnGpWwjGUybJNDZbWzULdhgLx/Q7k8fFePEar1gffuaoPver4F8dG3vO0FekMPWIaghdkO1GGDYWYu3WPanoDka0R00eouohCnD6sVrt658ShRU9LeNcAMhN5FAws03BAI/TN/eUBRhU1FH7sHQpb9ZBheULUndtMbWB8KR9C7FPQxJMnc419gkmaoNy3vRZpCxUouQfshhj2Q+ANJsX+joD+f52GKDa/zPl388x1dcOPW7Gt5XPJw5lVKOYGpSpe/nBqnndAR+8y7kU1/JoFiRMR1Azr7Edh4VXyRYd7/bfndt0aTh4mXt3Bi+3JQ1lV/ulAlc+ee1rRXcZ74hGPcgn4tqkyrl4YRm+U3oxzlJ8D+SZ4qAlKvGF6Sv6iVWH3BIoS9GgYzsBFgv53hhrDlCM0GWdOFb3wQpnfb08D3anEfFW40k8Upqiz7EmpH3v9UDfVm6mYTVWZR/EDHDbPK40mXeq8Rkp5r9zy5DMyrPsctiU8=
