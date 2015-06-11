@@ -6,10 +6,7 @@ branches:
   - master
 before_script:
   - cd backend/threesixtytool/
-  - chmod 600 ~/.ssh/id_rsa*
-  - eval `ssh-agent -s`
-  - ssh-add ~/.ssh/id_rsa
-before_deploy: "scp -p service-registry/target/service-registry-1.0.0-SNAPSHOT.jar 5570d93be0b8cde0de00019b@registry-oraj360tool.rhcloud.com:/app-deployments/current/"
+script: mvn -version
 deploy:
   provider: openshift
   skip_cleanup: true
